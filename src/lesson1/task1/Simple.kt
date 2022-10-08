@@ -53,7 +53,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  * Пример главной функции
  */
 fun main() {
-    val x1x2 = lengthInMeters(8, 2, 11  )
+    val x1x2 = accountInThreeYears(100, 10 )
     println("Root product: $x1x2")
 }
 
@@ -78,7 +78,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = hours * 3600 + minute
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double ={
     val sagenes_m = 2.1336
-    val arshins_m 2= 0.7112
+    val arshins_m = 0.7112
     val vershoks_m = 0.04445
     return (sagenes * sagenes_m) + (arshins * arshins_m) + (vershoks * vershoks_m)}
 
@@ -144,7 +144,10 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
+fun accountInThreeYears(initial: Int, percent: Int): Double ={
+    val coefficient (1.0 + percent / 100.0)
+    return initial * coefficient.pow(3)
+}
 
 /**
  * Простая (2 балла)
