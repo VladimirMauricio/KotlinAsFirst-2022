@@ -3,6 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -96,7 +97,16 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    val threatA = rookX1 == kingX || rookY1 == kingY
+    val threatB = rookX2 == kingX || rookY2 == kingY
+    return when {
+        threatA && threatB -> 3
+        threatA -> 1
+        threatB -> 2
+        else -> 0
+    }
+}
 
 /**
  * Простая (2 балла)
