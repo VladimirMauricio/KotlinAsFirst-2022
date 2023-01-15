@@ -94,7 +94,7 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = deg * 0.0174532 + min 
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double) = TODO()
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Nothing = TODO()
 
 /**
  * Простая (2 балла)
@@ -102,7 +102,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double) = TODO()
  * Пользователь задает целое число, больше или равно 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int =  (number % 1000) / 100
+fun thirdDigit(number: Int): Int = (number % 1000) / 100
 
 
 
@@ -116,11 +116,11 @@ fun thirdDigit(number: Int): Int =  (number % 1000) / 100
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int{
 
 // 1 hours = 60 min
-        // 9-7=2
-        val duration_hours = hoursArrive-hoursDepart
-        val duration_minutes = minutesArrive-minutesDepart
-        val result = duration_minutes+(duration_hours*60)
-        return result
+    // 9-7=2
+    val duration_hours = hoursArrive-hoursDepart
+    val duration_minutes = minutesArrive-minutesDepart
+    val result = duration_minutes+(duration_hours*60)
+    return result
 }
 
 /**
@@ -130,7 +130,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
+fun accountInThreeYears(initial: Int, percent: Int): Double = (1 + (percent / 100.0)).pow(3) * initial
 
 /**
  * Простая (2 балла)
@@ -138,5 +138,13 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = TODO()
+fun numberRevert(number: Int): Int {
 
+    var value = number
+    var conversion = 0
+    while (value > 0) {
+        conversion = 10 * conversion + value % 10
+        value /= 10
+    }
+    return conversion
+}
