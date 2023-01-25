@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +73,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var k = abs(n)
+    do {
+        k /= 10
+        count++
+    } while (k > 0)
+    return count
+}
 
 /**
  * Простая (2 балла)
@@ -94,7 +103,7 @@ fun minDivisor(n: Int): Int = TODO()
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int = n / minDivisor(n) // ??
 
 /**
  * Простая (2 балла)
@@ -138,7 +147,15 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var revert = 0
+    var number = n
+    while(number > 0){
+        revert = revert * 10 + number % 10
+        number /= 10
+    }
+    return revert
+}
 
 /**
  * Средняя (3 балла)
