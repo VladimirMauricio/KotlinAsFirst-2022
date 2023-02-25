@@ -74,7 +74,46 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (Regex("""([1-9]|0[1-9]|[12][0-9]|3[0-1])\s[a-я]+\s\d+""").matches(str)){
+            val days = parts[0].toInt()
+    val months = mapOf<String, String>(
+        "января" to "01" , // почему-то не правильно
+        "февраля" to "02" ,
+        "март" to "03" ,
+        "април" to "04" ,
+        "май" to "05" ,
+        "юнь" to "06" ,
+        "юль" to "07" ,
+        "август" to "08" ,
+        "сентября" to "09" ,
+        "октября" to "10" ,
+        "ноября" to "11" ,
+        "декабря" to "12" ,
+    )
+        val day = when {
+            days in 1..9 && "0" !in days.toString() -> "0$days."
+            days in 1..months[parts[1]]?.let {
+                daysInMonth(
+                    it.toInt(),
+                    parts[2].toInt()
+                )
+            }!! -> parts[0] + "."
+
+            else -> return ""
+        }
+
+        val month = if (parts[1] in months) {
+            months[parts[1]] + "."
+        } else return ""
+
+        val year = parts[2]
+        return day + month + year
+    }
+    return ""
+}
+
 
 /**
  * Средняя (4 балла)
@@ -86,7 +125,34 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String{
+    val parts = digital.split(".")
+    if (Regex("""(0[1-9]|[12][0-9]|3[0-1])\.(0[1-9]|1[0-2])\.\d+""").matches(digital)) {
+        val days = parts[0].toInt()
+        val months = mapOf(
+            "01" to "января ", "02" to "февраля ",
+            "03" to "марта ", "04" to "апреля ", "05" to "мая ", "06" to "июня ", "07" to "июля ",
+            "08" to "августа ", "09" to "сентября ", "10" to "октября ", "11" to "ноября ",
+            "12" to "декабря "
+        )
+        val day = when (days) {
+            in 1..daysInMonth(
+                parts[1].toInt(), parts[2].toInt()
+            ) -> "$days "
+
+            else -> return ""
+        }
+
+        val month = if (parts[1] in months) {
+            months[parts[1]]
+        } else return ""
+
+
+        val year = parts[2]
+        return day + month + year
+    }
+    return ""
+}
 
 /**
  * Средняя (4 балла)
@@ -127,7 +193,12 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!jumps.matches(Regex("""\d+ [-+%]+( \d+ [-+%]+)*""")) or !jumps.contains("+")) return -1
+    val res = jumps.replace(Regex("""[%-]"""), "").split(" ")
+    return res[res.lastIndexOf("+") - 1].toInt()
+}
+
 
 /**
  * Сложная (6 баллов)
