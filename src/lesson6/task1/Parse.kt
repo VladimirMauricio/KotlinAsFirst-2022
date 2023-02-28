@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -47,20 +49,7 @@ fun timeSecondsToStr(seconds: Int): String {
 /**
  * Пример: консольный ввод
  */
-fun main() {
-    println("Введите время в формате ЧЧ:ММ:СС")
-    val line = readLine()
-    if (line != null) {
-        val seconds = timeStrToSeconds(line)
-        if (seconds == -1) {
-            println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        } else {
-            println("Прошло секунд с начала суток: $seconds")
-        }
-    } else {
-        println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
-    }
-}
+fun main(): Nothing = TODO()
 
 
 /**
@@ -74,25 +63,27 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String {
+fun dateStrToDigit(str: String) {
     val parts = str.split(" ")
-    if (Regex("""([1-9]|0[1-9]|[12][0-9]|3[0-1])\s[a-я]+\s\d+""").matches(str)){
-            val days = parts[0].toInt()
-    val months = mapOf<String, String>(
-        "января" to "01" , // почему-то не правильно
-        "февраля" to "02" ,
-        "март" to "03" ,
-        "април" to "04" ,
-        "май" to "05" ,
-        "юнь" to "06" ,
-        "юль" to "07" ,
-        "август" to "08" ,
-        "сентября" to "09" ,
-        "октября" to "10" ,
-        "ноября" to "11" ,
-        "декабря" to "12" ,
-    )
-        val day = when {
+    if (Regex("""([1-9]|0[1-9]|[12][0-9]|3[0-1])\s[a-я]+\s\d+""").matches(str)) {
+        val days = parts[0].toInt()
+        val months = mapOf<String, String>(
+            "января" to "01", // почему-то не правильно
+            "февраля" to "02",
+            "март" to "03",
+            "април" to "04",
+            "май" to "05",
+            "юнь" to "06",
+            "юль" to "07",
+            "август" to "08",
+            "сентября" to "09",
+            "октября" to "10",
+            "ноября" to "11",
+            "декабря" to "12",
+        )
+    }
+}
+       /* val day = when {
             days in 1..9 && "0" !in days.toString() -> "0$days."
             days in 1..months[parts[1]]?.let {
                 daysInMonth(
@@ -112,7 +103,7 @@ fun dateStrToDigit(str: String): String {
         return day + month + year
     }
     return ""
-}
+} */
 
 
 /**
