@@ -83,27 +83,6 @@ fun dateStrToDigit(str: String) {
         )
     }
 }
-       /* val day = when {
-            days in 1..9 && "0" !in days.toString() -> "0$days."
-            days in 1..months[parts[1]]?.let {
-                daysInMonth(
-                    it.toInt(),
-                    parts[2].toInt()
-                )
-            }!! -> parts[0] + "."
-
-            else -> return ""
-        }
-
-        val month = if (parts[1] in months) {
-            months[parts[1]] + "."
-        } else return ""
-
-        val year = parts[2]
-        return day + month + year
-    }
-    return ""
-} */
 
 
 /**
