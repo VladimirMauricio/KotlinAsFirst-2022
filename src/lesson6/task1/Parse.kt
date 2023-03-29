@@ -49,7 +49,9 @@ fun timeSecondsToStr(seconds: Int): String {
 /**
  * Пример: консольный ввод
  */
-fun main(): Nothing = TODO()
+fun lattenPhoneNumber(phone: String): String{
+    return ""
+}
 
 
 /**
@@ -63,27 +65,59 @@ fun main(): Nothing = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String) {
-    val parts = str.split(" ")
-    if (Regex("""([1-9]|0[1-9]|[12][0-9]|3[0-1])\s[a-я]+\s\d+""").matches(str)) {
-        val days = parts[0].toInt()
-        val months = mapOf<String, String>(
-            "января" to "01", // почему-то не правильно
-            "февраля" to "02",
-            "март" to "03",
-            "април" to "04",
-            "май" to "05",
-            "юнь" to "06",
-            "юль" to "07",
-            "август" to "08",
-            "сентября" to "09",
-            "октября" to "10",
-            "ноября" to "11",
-            "декабря" to "12",
-        )
+fun dateStrToDigit(str: String): String {
+    if(!str.matches(Regex("[0-9]{2} [а-я]+ [0-9]{4}")))
+        return ""
+    var monthStr = str.replace(Regex("[0-9]| "),"")
+    var year = str.substring(str.indexOf(monthStr)+monthStr.length+1).toInt()
+    var month = "00"
+    var maxDays=30;
+    var day =  str.substring(0,2).toInt()
+    when(monthStr){
+        "января"->{
+            month="01"
+            maxDays=31;
+        }
+        "марта"->{
+            month="03"
+            maxDays=31;
+        }
+        "мая"->{
+            month="05"
+            maxDays=31;
+        }
+        "июля"->{
+            month="07"
+            maxDays=31;
+        }
+        "августа"->{
+            month="08"
+            maxDays=31;
+        }
+        "октября"->{
+            month="10"
+            maxDays=31;
+        }
+        "декабря"->{
+            month="12"
+            maxDays=31;
+        }
+        "апреля"->{month="04"}
+        "июня"->{month="06"}
+        "сентября"->{month="09"}
+        "ноября"->{month="11"}
+        "февраля"->{month="02"
+            maxDays=28
+            if(year%4==0)
+                maxDays=29
+            if(year%100==0&&year%400!=0)
+                maxDays=28
+        }
     }
-}
 
+    if(day>maxDays) return "";
+    return str.replace(Regex(" [а-я]+ "),"."+month+".") // примерно так
+}
 
 /**
  * Средняя (4 балла)
@@ -95,33 +129,50 @@ fun dateStrToDigit(str: String) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String{
-    val parts = digital.split(".")
-    if (Regex("""(0[1-9]|[12][0-9]|3[0-1])\.(0[1-9]|1[0-2])\.\d+""").matches(digital)) {
-        val days = parts[0].toInt()
-        val months = mapOf(
-            "01" to "января ", "02" to "февраля ",
-            "03" to "марта ", "04" to "апреля ", "05" to "мая ", "06" to "июня ", "07" to "июля ",
-            "08" to "августа ", "09" to "сентября ", "10" to "октября ", "11" to "ноября ",
-            "12" to "декабря "
-        )
-        val day = when (days) {
-            in 1..daysInMonth(
-                parts[1].toInt(), parts[2].toInt()
-            ) -> "$days "
+fun dateDigitToStr(digital: String): String {
+    if(!digital.matches(Regex("[0-9]{2}.[0-9]{2}.[0-9]{4}")))
+        return ""
+    var month="hh"
+    var maxDays=30;
+    var year = digital.substring(7).toInt()
+    var day =  digital.substring(0,2).toInt()
+    when(digital.substring(3,5))
+    {
+        "01"->{month = " января "
+            maxDays=31}
 
-            else -> return ""
+        "02"->{month = " февраля "
+            maxDays=28
+            if(year%4==0)
+                maxDays=29
+            if(year%100==0&&year%400!=0)
+                maxDays=28
         }
-
-        val month = if (parts[1] in months) {
-            months[parts[1]]
-        } else return ""
-
-
-        val year = parts[2]
-        return day + month + year
+        "03"->{month = " марта "
+            maxDays=31
+        }
+        "04"->{month = " апреля "}
+        "05"->{month = " мая "
+            maxDays=31
+        }
+        "06"->{month = " июня "}
+        "07"->{month = " июля "
+            maxDays=31
+        }
+        "08"->{month = " августа "
+            maxDays=31
+        }
+        "09"->{month = " сентября "}
+        "10"->{month = " октября "
+            maxDays=31
+        }
+        "11"->{month = " ноября "}
+        "12"->{month = " декабря "
+            maxDays=31}
     }
-    return ""
+    if(day>maxDays) return "";
+    return digital.replace(Regex("[.][0-9]{2}[.]"), month )
+
 }
 
 /**
@@ -138,7 +189,14 @@ fun dateDigitToStr(digital: String): String{
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    if(phone.contains( Regex("[^0-9() +-]")))
+        return ""
+    val flatPhone = phone.replace(Regex("[^0-9+]| "),"")
+    return flatPhone
+
+}
+
 
 /**
  * Средняя (5 баллов)
@@ -150,7 +208,22 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val jumpList = jumps.split(" ")
+    var longjump = -1;
+    try {
+        for (v in jumpList) {
+            if (v == " " || v == "%" || v == "-")
+                continue;
+            if (v.toInt() > longjump)
+                longjump = v.toInt()
+        }
+        return longjump
+    }
+    catch (e:NumberFormatException){
+        return -1
+    }
+}
 
 /**
  * Сложная (6 баллов)

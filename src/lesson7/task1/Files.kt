@@ -22,38 +22,7 @@ import java.util.*
  * Пустые строки во входном файле обозначают конец абзаца,
  * их следует сохранить и в выходном файле
  */
-fun alignFile(inputName: String, lineLength: Int, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
-    var currentLineLength = 0
-    fun append(word: String) {
-        if (currentLineLength > 0) {
-            if (word.length + currentLineLength >= lineLength) {
-                writer.newLine()
-                currentLineLength = 0
-            } else {
-                writer.write(" ")
-                currentLineLength++
-            }
-        }
-        writer.write(word)
-        currentLineLength += word.length
-    }
-    for (line in File(inputName).readLines()) {
-        if (line.isEmpty()) {
-            writer.newLine()
-            if (currentLineLength > 0) {
-                writer.newLine()
-                currentLineLength = 0
-            }
-            continue
-        }
-        for (word in line.split(Regex("\\s+"))) {
-            append(word)
-        }
-    }
-    writer.close()
-}
-
+fun alignFile(inputName: String, lineLength: Int, outputName: String): Nothing = TODO()
 /**
  * Простая (8 баллов)
  *
@@ -76,25 +45,7 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val r = mutableMapOf<String, Int>()
-    val t = File(inputName).readText().lowercase(Locale.getDefault())
-    for (substring in substrings) {
-        var count = 0
-        var index = 0
-        while (index < t.length) {
-            index = t.indexOf(substring.lowercase(Locale.getDefault()), index)
-            if (index == -1) break
-            count++
-            index++
-
-        }
-        r[substring] = count
-
-    }
-    return r // примерно так
-
-}
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
 
 
 /**

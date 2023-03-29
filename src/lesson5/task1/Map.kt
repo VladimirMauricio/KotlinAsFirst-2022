@@ -2,6 +2,9 @@
 
 package lesson5.task1
 
+import kotlinx.html.A
+import kotlinx.html.B
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -96,7 +99,24 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val b = mutableMapOf<Int, MutableList<String>>()
+
+    for (v in grades) {
+        if (!b.containsKey(v.value))
+            b.put(v.value, mutableListOf(v.key))
+        else
+            b[v.value]?.add(v.key)
+    }
+    val c = mutableMapOf<Int, List<String>>()
+    for (i in b)
+        c.put(i.key, i.value.toList())
+    val d = c.toMap()
+
+    return d
+}
+
+
 
 /**
  * Простая (2 балла)
@@ -109,9 +129,15 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    for ((k, v) in a) if (v != b[k]) return false
+    for (v in a)
+        if (b.contains(v.key)) {
+            if (b[v.key] != a[v.key])
+                return false
+        } else
+            return false
     return true
 }
+
 
 /**
  * Простая (2 балла)
@@ -128,8 +154,12 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    for ((k, v) in b) if (v == a[k]) a.remove(k)
+    for (v in b)
+        if (v.value == a[v.key])
+            a.remove(v.key)
+    return // как то так
 }
+
 
 /**
  * Простая (2 балла)
@@ -138,7 +168,16 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.intersect(b).toList()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
+    var list2 = mutableListOf<String>()
+
+for (v in a)
+if (b.contains(v) && !list2.contains(v))
+list2.add(v)
+
+return list2
+}
+
 
 /**
  * Средняя (3 балла)
@@ -157,7 +196,21 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.intersect(b
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    var result = mutableMapOf<String, String>()
+    for(v in mapA)
+        result.put(v.key, v.value)
+    for(v in mapB)
+        if(result.contains(v.key))
+            result[v.key] = result[v.key]+", "+v.value
+        else
+            result.put(v.key, v.value)
+    return result
+
+
+}
+
+
 
 /**
  * Средняя (4 балла)
@@ -169,25 +222,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val res = mutableMapOf<String, Double>()
-    val j = mutableListOf<String>()
-    for ((first) in stockPrices) {
-        if (first !in j) j.add(first)
-    }
-    for (n in j) {
-        var sum = 0.0
-        var count = 0
-        for ((stock, price) in stockPrices){
-            if (stock == n) {
-                sum += price
-                count++
-            }
-        }
-        res[n] = sum / count
-    }
-    return res
-}
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
 
 /**
  * Средняя (4 балла)
@@ -204,10 +239,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    val k = stuff.filterValues { it.first == kind}
-    return k.minByOrNull { it.value.second }?.key
-}
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
 
 /**
  * Средняя (3 балла)
