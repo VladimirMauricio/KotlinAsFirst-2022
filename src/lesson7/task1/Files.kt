@@ -33,8 +33,30 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String): Nothing =
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    var inputNameFile = File(inputName)
+    var textFromFile = ""
+    try {
+        textFromFile = inputNameFile.readText()
+    }
+    catch (e:java.io.FileNotFoundException) {
+        println("Произошла ошибка. Файл не существует.")
+    }
+
+    val listString = textFromFile.split("\n")
+    val newList = mutableListOf<String>()
+    for (v in listString)
+        if (v.length > 0) {
+            if ("_" != v.substring(0, 1))
+                newList.add(v)
+        }
+        else
+            newList.add(v)
+
+    val output = newList.joinToString("\n")
+    val outputNameFile = File(outputName)
+    outputNameFile.writeText(output)
 }
+
 
 /**
  * Средняя (14 баллов)
@@ -45,7 +67,35 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    var inputNameFile = File(inputName)
+    var textFromFile = ""
+    try {
+        textFromFile = inputNameFile.readText().lowercase(Locale.getDefault())
+    } catch (e: java.io.FileNotFoundException) {
+        println("Произошла ошибка. Файл не существует.")
+    }
+    val mappp = mutableMapOf<String, Int>()
+
+    for (v in substrings) {
+        var number = 0;
+        val textsize = textFromFile.length
+        val lowertext = textFromFile.lowercase(Locale.getDefault())
+        val lowerv = v.lowercase(Locale.getDefault())
+        //println(lowertext+" "+lowerv)
+        for (k in 0 .. textsize-v.length){
+            //println(" ["+lowertext.substring(k, v.length+k)+"] "+lowerv)
+            if (lowertext.substring(k, v.length+k)==lowerv)
+                number++
+        }
+        mappp.put(v, number)
+    }
+
+
+
+    return mappp
+}
+
 
 
 /**
@@ -62,7 +112,24 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    var inputNameFile = File(inputName)
+    var textFromFile = ""
+    try {
+        textFromFile = inputNameFile.readText()
+    }
+    catch (e:java.io.FileNotFoundException) {
+        println("Произошла ошибка. Файл не существует.")
+    }
+
+    var output = textFromFile.replace(Regex("([жчшщЖЧШЩ])ы"),"$1и")
+    output = output.replace(Regex("([жчшщЖЧШЩ])я"),"$1а")
+    output = output.replace(Regex("([жчшщЖЧШЩ])ю"),"$1у")
+    output = output.replace(Regex("([жчшщЖЧШЩ])Я"),"$1А")
+    output = output.replace(Regex("([жчшщЖЧШЩ])Ю"),"$1У")
+    output = output.replace(Regex("([жчшщЖЧШЩ])Ы"),"$1И")
+
+    val outputNameFile = File(outputName)
+    outputNameFile.writeText(output)
 }
 
 /**

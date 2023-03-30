@@ -201,19 +201,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()/* {
-    val factor = mutablelistOf<Int>()
-    var dividido = n
-    var denominador = 2
-    while (dividido > 1){
-        if(dividido % denominador == 0){
-            dividido /= denominador
-            factor.add(denominador)
-        } else denominador++
-
-    } else denominador  // что то не так?
-    return factor
-} */
+fun factorize(n: Int): List<Int> = TODO()
 
 /**
  * Сложная (4 балла)
